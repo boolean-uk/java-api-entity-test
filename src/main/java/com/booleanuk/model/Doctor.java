@@ -32,6 +32,6 @@ public class Doctor {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
 }

@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -30,12 +27,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    // Removed nullable = false in case patient cancels. Doctor will then have a free appointment.
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
+    // Removed nullable = false in case doctor can't make it.
     @ManyToOne
-    @JoinColumn(name = "doctor_id", nullable = false)
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     @Column(name = "appointment_date", nullable = false)

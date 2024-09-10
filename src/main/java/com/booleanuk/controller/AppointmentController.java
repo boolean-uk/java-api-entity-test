@@ -7,6 +7,7 @@ import com.booleanuk.model.Patient;
 import com.booleanuk.repository.AppointmentRepository;
 import com.booleanuk.repository.DoctorRepository;
 import com.booleanuk.repository.PatientRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +100,20 @@ public class AppointmentController {
         return new ResponseEntity<>(convertToDTO(appointmentToDelete), HttpStatus.OK);
     }
 
+    @GetMapping("patients/{id}")
+    public ResponseEntity<List<AppointmentDTO>> getPatientAppointment(@PathVariable (name = "id") int id) {
+        ArrayList<AppointmentDTO> appointmentDTOS= new ArrayList<>();
+        appointmentRepository.findAll().stream().filter(a -> a.getPatient().getId() == id).forEach(a -> appointmentDTOS.add(convertToDTO(a)));
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("doctors/{id}")
+    public ResponseEntity<List<AppointmentDTO>> getDoctorAppointment(@PathVariable (name = "id") int id) {
+        ArrayList<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+        appointmentRepository.findAll().stream().filter(a -> a.getDoctor().getId() == id).forEach(a -> appointmentDTOS.add(convertToDTO(a)));
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
+    }
+
     private Appointment getAppointment(int id) throws ResponseStatusException {
         return this.appointmentRepository
                 .findById(id)
@@ -108,9 +122,13 @@ public class AppointmentController {
     }
 
     private AppointmentDTO convertToDTO(Appointment appointment){
+        String patientName = (appointment.getPatient() == null)? "" : appointment.getPatient().getName();
+        String doctorName = (appointment.getDoctor() == null)? "" : appointment.getDoctor().getName();
+
         return new AppointmentDTO(
-                appointment.getPatient().getName(),
-                appointment.getDoctor().getName(),
+                appointment.getId(),
+                patientName,
+                doctorName,
                 appointment.getAppointmentTime());
     }
 }

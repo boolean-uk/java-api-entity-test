@@ -1,30 +1,27 @@
 package com.booleanuk.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 
 @Entity
-@Table(name = "Patients")
-public class Patient {
+@Table(name = "Doctors")
+public class Doctor {
 
-    public Patient(String name, Date dateOfBirth) {
+    public Doctor(String name){
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
         this.appointments = new ArrayList<>();
     }
 
-    public Patient(int id){
+    public Doctor(int id){
         this.id = id;
     }
 
@@ -35,10 +32,6 @@ public class Patient {
     @Column(name = "name")
     private String name;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @Column(name = "date_of_birth")
-    private Date dateOfBirth;
-
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointments;
 }

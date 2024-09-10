@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.xml.crypto.Data;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/patients")
@@ -50,8 +51,14 @@ public class PatientController {
                 findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No patient with the provided id was found"));
         try {
-            patientToUpdate.setName(patient.getName());
-            patientToUpdate.setDateOfBirth(patient.getDateOfBirth());
+
+            if (!Objects.equals(patientToUpdate.getName(), patient.getName())){
+                patientToUpdate.setName(patient.getName());
+            }
+
+            if (!Objects.equals(patientToUpdate.getDateOfBirth(), patient.getDateOfBirth())){
+                patientToUpdate.setDateOfBirth(patient.getDateOfBirth());
+            }
 
             return new ResponseEntity<>(patientToUpdate, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e) {

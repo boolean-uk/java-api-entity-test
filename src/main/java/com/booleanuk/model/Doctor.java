@@ -23,7 +23,7 @@ public class Doctor {
 
 
     @OneToMany(mappedBy = "doctor")
-    @JsonIncludeProperties(value = {"appointmentDate", "patient"})
+    @JsonIncludeProperties(value = {"appointmentDate", "patient", "online"})
     private List<Appointment> appointments;
 
 

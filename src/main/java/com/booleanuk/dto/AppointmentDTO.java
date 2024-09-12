@@ -15,4 +15,6 @@ public class AppointmentDTO {
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date appointmentDate;
+
+    private boolean isOnline;
 }

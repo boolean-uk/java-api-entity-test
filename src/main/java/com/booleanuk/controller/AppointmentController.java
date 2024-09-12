@@ -41,7 +41,7 @@ public class AppointmentController {
             errorResponse.set("Not found");
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
-        Appointment appointment = new Appointment(patient, doctor, appointmentDTO.getAppointmentDate());
+        Appointment appointment = new Appointment(patient, doctor, appointmentDTO.getAppointmentDate(), appointmentDTO.isOnline());
         this.repository.save(appointment);
 
         doctor.addAppointment(appointment);

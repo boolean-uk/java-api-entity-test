@@ -36,10 +36,14 @@ public class Appointment {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date appointmentDate;
 
-    public Appointment(Patient patient, Doctor doctor, Date appointmentDate) {
+    @Column(name = "isOnline")
+    private boolean isOnline;
+
+    public Appointment(Patient patient, Doctor doctor, Date appointmentDate, boolean isOnline) {
         this.patient = patient;
         this.doctor = doctor;
         this.appointmentDate = appointmentDate;
+        this.isOnline = isOnline;
     }
 
 }

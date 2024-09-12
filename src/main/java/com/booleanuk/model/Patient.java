@@ -28,7 +28,7 @@ public class Patient {
     private String ssn;
 
     @OneToMany(mappedBy = "patient")
-    @JsonIncludeProperties(value = {"appointmentDate", "doctor"})
+    @JsonIncludeProperties(value = {"appointmentDate", "doctor", "online"})
     private List<Appointment> appointments;
 
 

@@ -2,6 +2,7 @@ package com.booleanuk.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,11 @@ public class Appointment {
 
     @Column(name = "isOnline")
     private boolean isOnline;
+
+    @ManyToOne
+    @JoinColumn(name = "prescription_id")
+    @JsonIgnoreProperties(value = {"prescription", "appointments"})
+    private Prescription prescription;
 
     public Appointment(Patient patient, Doctor doctor, Date appointmentDate, boolean isOnline) {
         this.patient = patient;

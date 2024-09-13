@@ -11,4 +11,6 @@ public class PrescriptionDTO {
     private  Integer quantity;
 
     private String instructions;
+
+    private Integer appointment;
 }

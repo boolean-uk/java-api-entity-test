@@ -1,6 +1,7 @@
 package com.booleanuk.model;
 
 import com.booleanuk.dto.PrescriptionDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Medicine {
     private String typeOfMedicine;
 
     @ManyToMany(mappedBy = "medicines")
+    @JsonIgnore
     private Set<Prescription> prescriptions = new HashSet<>();
 
     public Medicine(String name, String typeOfMedicine) {

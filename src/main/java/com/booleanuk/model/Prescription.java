@@ -1,6 +1,7 @@
 package com.booleanuk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,9 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +38,11 @@ public class Prescription {
     @JsonIncludeProperties(value = {"name", "typeOfMedicine"})
     Set<Medicine> medicines = new HashSet<>();
 
+    @OneToMany(mappedBy = "prescription")
+    @JsonIgnoreProperties(value = {"prescription"})
+    private List<Appointment> appointments;
+
+
     public Prescription(Integer quantity, String instructions, Set<Medicine> medicines) {
         this.quantity = quantity;
         this.instructions = instructions;
@@ -47,5 +51,9 @@ public class Prescription {
 
     public void addMedicine(Medicine medicine) {
         medicines.add(medicine);
+    }
+
+    public void addAppointment(Appointment appointment) {
+        this.appointments.add(appointment);
     }
 }
